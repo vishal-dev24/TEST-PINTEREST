@@ -70,19 +70,24 @@ const Profile = () => {
 
   return (
     <div className="dark:bg-gray-900  min-h-screen pb-10">
+
       {/* Navbar */}
       <nav className="bg-gray-100 drop-shadow-[0_4px_6px_rgba(255,255,255,0.3)] p-2 sticky top-0 z-50 w-full">
         <div className="flex justify-between items-center px-1">
-          <Link href={'/home'} className="text-3xl font-extrabold flex items-center space-x-1">
+
+          <button onClick={() => navigate("/home")} className="text-3xl font-extrabold flex items-center space-x-1">
             <img src={img} alt="Pinterest Icon" className="w-12 h-12 rounded-full shadow-md" />
             <span className="tracking-wide text-gray-800">Phinix</span>
-          </Link>
+          </button>
+
           <div className="flex space-x-2 items-center font-semibold">
             <button onClick={() => navigate("/CreatePost")} className="px-3 py-2 bg-gray-700 text-white rounded-lg">CreatePin</button>
             <button onClick={() => navigate("/Pins")} className="px-3 py-2 bg-gray-700 text-white rounded-lg">Pins</button>
           </div>
         </div>
       </nav>
+
+
       {/* Profile Section */}
       <div className="flex justify-center items-center min-h-[50vh] bg-gray-100 dark:bg-gray-900 px-4">
         <div className="relative w-full max-w-3xl  bg-white dark:bg-gray-800 shadow-2xl border-2 border-white/60 rounded-2xl flex items-center p-6 space-x-8 backdrop-blur-lg">
