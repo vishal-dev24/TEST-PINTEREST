@@ -90,7 +90,7 @@ const SinglePin = () => {
                     {/* Left: Image Section */}
                     <div className="md:w-1/2 relative group border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden">
                         <img
-                            src={`https://test-pinterest.onrender.com/uploads/${post.image}`}
+                            src={post.image}
                             alt={post.title}
                             className="object-cover w-full h-[380px] md:h-[480px] lg:h-[520px] transition-all rounded-xl"
                         />
@@ -106,7 +106,7 @@ const SinglePin = () => {
                         {/* Download Button */}
                         <img
                             src={lg}
-                            onClick={() => handleDownload(`https://test-pinterest.onrender.com/uploads/${post.image}`, post.title)}
+                            onClick={() => handleDownload(post.image, post.title)}
                             className="absolute right-3 bottom-3 opacity-0 bg-blue-100 p-3 rounded-lg text-white shadow-md group-hover:opacity-100 transition-all hover:scale-105"
                         />
                     </div>
@@ -123,7 +123,7 @@ const SinglePin = () => {
                         {/* User Info & Likes */}
                         <div className="flex items-center gap-3">
                             {post.userId?.image && (
-                                <img src={`https://test-pinterest.onrender.com/uploads/${post.userId.image}`} alt={post.userId.username} className="w-14 h-14 rounded-full object-cover border-2 border-gray-400 shadow-md" />
+                                <img src={post.userId.image} alt={post.userId.username} className="w-14 h-14 rounded-full object-cover border-2 border-gray-400 shadow-md" />
                             )}
                             <p className="text-gray-600 dark:text-gray-400 text-lg font-semibold">{post.likes || 0} ❤️</p>
                         </div>
@@ -161,7 +161,7 @@ const SinglePin = () => {
                                     >
                                         {/* Board Image */}
                                         {board.posts.length > 0 ? (
-                                            <img src={`https://test-pinterest.onrender.com/uploads/${board.posts[0].image}`}
+                                            <img src={board.posts[0].image}
                                                 alt={board.name}
                                                 className="w-14 h-14 rounded-lg border border-gray-400 mr-4 object-cover"
                                             />

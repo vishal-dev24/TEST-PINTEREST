@@ -56,9 +56,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen">
-
-
+    <div className="bg-gray-300 min-h-screen">
       {/* Navbar */}
       <nav className="bg-white shadow-lg p-2 sticky top-0 z-50 w-full">
         <div className="flex justify-between items-center px-1">

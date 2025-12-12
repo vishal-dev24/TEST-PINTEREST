@@ -15,10 +15,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios.post('https://test-pinterest.onrender.com/login', formData, { withCredentials: true });
-    setFormData({ username: '', email: '' });
+    setFormData({ email: '', password: '' });
     navigate('/home');
   }
-
   return (
     <div className="min-h-screen w-full bg-gray-100">
       <nav className="w-full bg-white p-2 shadow-md">
@@ -27,8 +26,7 @@ const Login = () => {
             <img src={img} alt="Pinterest Icon" className="w-12 h-12 rounded-full shadow-md" />
             <span className="tracking-wide text-gray-800">Phinix</span>
           </a>
-          <button type="submit"
-            className="bg-gray-800 hover:bg-gray-700 font-bold text-white px-3 py-2 rounded"><Link to="/" >Register</Link></button>
+          <button type="button" onClick={() => navigate('/')} className="bg-gray-800 hover:bg-gray-700 font-bold text-white px-3 py-2 rounded"> Register</button>
         </div>
       </nav>
 

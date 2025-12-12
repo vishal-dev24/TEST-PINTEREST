@@ -70,7 +70,7 @@ const Home = () => {
                     </button>
                     <div className="flex space-x-2 items-center text-white">
                         {user && (
-                            <img src={`https://test-pinterest.onrender.com/uploads/${user.image}`} alt="User" className="w-12 h-12 border-2  border-slate-200 rounded-full" />
+                            <img src={user.image} alt="User" className="w-12 h-12 border-2  border-slate-200 rounded-full" />
                         )}
                         <button onClick={() => navigate("/profile")} className="px-3 py-2 bg-gray-700 font-bold rounded-lg">Profile</button>
                     </div>
@@ -81,10 +81,10 @@ const Home = () => {
                 {posts.length > 0 ? (
                     posts.map((post) => (
                         <div key={post._id} className="relative group break-inside-avoid bg-white shadow-lg rounded-lg overflow-hidden">
-                            <img src={`https://test-pinterest.onrender.com/uploads/${post.image}`} alt={post.title} className="w-full object-cover rounded-t-lg" />
+                            <img src={post.image} alt={post.title} className="w-full object-cover rounded-t-lg" />
                             <button className="absolute top-2 right-2 bg-slate-900 text-white px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition" onClick={() => openBoardModal(post._id)}> Save </button>
                             {/* Download */}
-                            <img src={lg} onClick={() => handleDownload(`https://test-pinterest.onrender.com/uploads/${post.image}`, post.title)}
+                            <img src={lg} onClick={() => handleDownload(post.image, post.title)}
                                 className="absolute right-2 bottom-2 opacity-0 bg-white p-1 rounded-full shadow-lg group-hover:opacity-100 transition duration-300 hover:scale-110 hover:bg-gray-200 cursor-pointer" />
                         </div>
                     ))
@@ -93,33 +93,59 @@ const Home = () => {
                 )}
             </div>
 
+            {/* Save to Board Modal */}
             {showBoardModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="bg-white p-5 rounded-lg shadow-lg w-80">
-                        <h2 className="text-xl font-bold mb-3">Save to Board</h2>
+                        <h2 className="text-xl font-bold mb-4 text-gray-800">Save to Board</h2>
+
                         {boards.length > 0 ? (
                             boards.map((board) => (
-                                <button key={board._id} className="text-gray-800 hover:text-white flex items-center w-full py-1 px-4 bg-gray-100 border-2 border-zinc-400 rounded-lg mb-2 hover:bg-gray-800" onClick={() => saveToBoard(board._id)}>
-                                    {/* Board Image */}
+                                <button
+                                    key={board._id}
+                                    onClick={() => saveToBoard(board._id)}
+                                    className="flex items-center w-full py-2 px-3 mb-2 rounded-lg border-2 border-gray-300 bg-gray-100 hover:bg-gray-800 hover:text-white transition-all"
+                                >
+                                    {/* BOARD IMAGE / THUMBNAIL */}
                                     {board.posts.length > 0 ? (
-                                        <img src={`https://test-pinterest.onrender.com/uploads/${board.posts[0].image}`}
+                                        <img
+                                            src={board.posts[0].image}  // Cloudinary URL direct
                                             alt={board.name}
-                                            className="w-12 h-12 rounded-lg border-slate-600 border mr-5" />
+                                            className="w-14 h-14 rounded-lg border border-gray-400 mr-4 object-cover"
+                                        />
                                     ) : (
-                                        <img src="https://via.placeholder.com/50" className="w-10 h-5 rounded-lg mr-3" />
+                                        <img
+                                            src="https://placehold.co/100x100?text=No+Image"
+                                            className="w-14 h-14 rounded-lg object-cover"
+                                        />
+
                                     )}
-                                    <h2 className="text-xl capitalize font-bold tracking-wide">{board.name} </h2>
+
+                                    <span className="text-lg font-semibold capitalize">
+                                        {board.name}
+                                    </span>
                                 </button>
                             ))
                         ) : (
                             <p className="text-gray-500">No boards found.</p>
                         )}
-                        <div className="flex justify-between p-2  rounded">
-                            <button onClick={() => { setShowBoardModal(false); setShowCreateBoardModal(true); }} className="mt-3 text-blue-900 bg-slate-300 p-2 rounded hover:bg-cyan-600 hover:text-white text-lg">
-                                + Create New Board
+
+                        {/* Buttons */}
+                        <div className="flex justify-between mt-4">
+                            <button
+                                onClick={() => {
+                                    setShowBoardModal(false);
+                                    setShowCreateBoardModal(true);
+                                }}
+                                className="px-3 py-2 bg-slate-300 text-blue-900 rounded-lg font-semibold hover:bg-blue-600 hover:text-white"
+                            >
+                                + Create Board
                             </button>
 
-                            <button onClick={() => setShowBoardModal(false)} className="text-red-900 bg-red-300 rounded hover:bg-red-600 hover:text-white block px-2 mt-3 text-lg ">
+                            <button
+                                onClick={() => setShowBoardModal(false)}
+                                className="px-3 py-2 bg-red-300 text-red-900 rounded-lg font-semibold hover:bg-red-600 hover:text-white"
+                            >
                                 Cancel
                             </button>
                         </div>
@@ -127,15 +153,41 @@ const Home = () => {
                 </div>
             )}
 
-            {/* Create Board Modal */}
+            {/* Create New Board Modal */}
             {showCreateBoardModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-bold mb-3">Create New Board</h2>
-                        <form onSubmit={(e) => { e.preventDefault(); createBoard(); }}>
-                            <input type="text" value={newBoardName} onChange={(e) => setNewBoardName(e.target.value)} placeholder="Board Name" className="w-full border p-2 rounded-lg capitalize" required />
-                            <button type="submit" className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg">Create</button>
-                            <button type="button" onClick={() => setShowCreateBoardModal(false)} className="mt-3 text-red-500 block">Cancel</button>
+                    <div className="bg-white p-5 rounded-lg shadow-lg w-80">
+                        <h2 className="text-xl font-bold mb-4 text-gray-800">Create New Board</h2>
+
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                createBoard();
+                            }}
+                        >
+                            <input
+                                type="text"
+                                value={newBoardName}
+                                onChange={(e) => setNewBoardName(e.target.value)}
+                                placeholder="Board Name"
+                                className="w-full border p-2 rounded-lg capitalize mb-3"
+                                required
+                            />
+
+                            <button
+                                type="submit"
+                                className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
+                            >
+                                Create
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowCreateBoardModal(false)}
+                                className="w-full mt-3 text-red-600 font-semibold hover:text-red-800"
+                            >
+                                Cancel
+                            </button>
                         </form>
                     </div>
                 </div>

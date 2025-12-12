@@ -27,19 +27,18 @@ const Register = () => {
     <div className="min-h-screen w-full bg-gray-100">
       <nav className="w-full bg-white p-2 shadow-md">
         <div className="flex justify-between items-center px-5">
-          <button onClick={() => navigate("/home")} className="text-3xl font-extrabold flex items-center space-x-1">
+          <button onClick={() => navigate("/home")} className="text-3xl font-extrabold flex items-center space-x-3">
             <img src={img} alt="Pinterest Icon" className="w-12 h-12 rounded-full shadow-md" />
             <span className="tracking-wide text-gray-800">Phinix</span>
           </button>
-          <button type="submit" onClick={useNavigate('/login')}
-            className="bg-gray-800 hover:bg-gray-700 font-bold text-white px-3 py-2 rounded"><Link to="/login" >Login</Link></button>
+          <button type="button" onClick={() => navigate('/login')} className="bg-gray-800 hover:bg-gray-700 font-bold text-white px-3 py-2 rounded"> Login</button>
         </div>
       </nav>
 
       <div className="flex items-center justify-center flex-col p-7">
-        <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg border border-gray-300">
+        <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg border-2 border-gray-600">
           <h2 className="text-gray-900 text-3xl font-extrabold text-center mb-6">Join Phinix</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label className="block text-gray-700 font-semibold mb-3">Full Name</label>
               <input type="text" name='username'
