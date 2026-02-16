@@ -13,7 +13,7 @@ app.use(cookieParser());
 const cors = require("cors");
 
 app.use(cors({
-    origin: "https://test-pinterest-1.onrender.com",
+    origin: "https://test-pinterest.onrender.com",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 }));
