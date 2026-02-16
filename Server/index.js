@@ -35,7 +35,7 @@ app.post('/register', upload.single('image'), async (req, res) => {
         const imagefile = req.file ? req.file.filename : null;
         const existingUser = await userModel.findOne({ email });
         if (existingUser) return res.json({ success: false, message: "User already exists" });
-        const hash = bcrypt.hash(password, 10)
+        const hash = await bcrypt.hash(password, 10);
         const user = await userModel.create({ username, email, password: hash, image: imagefile });
         const token = jwt.sign({ email, userId: user._id }, SECRET);
         res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none" });
@@ -52,7 +52,7 @@ app.post('/login', async (req, res) => {
         const { email, password } = req.body;
         const user = await userModel.findOne({ email });
         if (!user) return res.status(400).json({ success: false, message: "Invalid email or password" });
-        const result = bcrypt.compare(password, user.password)
+        const result = await bcrypt.compare(password, user.password);
         if (!result) return res.json({ success: false, message: 'Wrong password' });
         const token = jwt.sign({ email, userId: user._id }, SECRET);
         res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none", });
