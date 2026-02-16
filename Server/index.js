@@ -78,29 +78,24 @@ app.get('/profile', isLoggedIn, async (req, res) => {
 
 // 🟢 Logout
 app.get("/logout", (req, res) => {
-    res.cookie("token", "", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none"
-    });
+    res.cookie("token", "", { httpOnly: true, secure: true, sameSite: "none" });
     res.json({ success: true, message: "Logged out successfully" });
 });
 
 // 🟢 Update Profile
 app.put('/profile/update', isLoggedIn, upload.single('image'), async (req, res) => {
     const { username } = req.body;
-    const image = req.file ? req.file.filename : undefined
-    const updatedUser = await userModel.findByIdAndUpdate(req.user._id, { username, ...(image && { image }) }, { new: true });
+    const imagefile = req.file ? req.file.filename : null;
+    const updatedUser = await userModel.findByIdAndUpdate(req.user._id, { username, image: imagefile }, { new: true });
     res.json({ success: true, user: updatedUser });
-});
-
+})
 // ---------------- POSTS ----------------
 
 app.post("/posts/create", isLoggedIn, upload.single("image"), async (req, res) => {
     try {
         const { title, description } = req.body;
-        const image = req.file ? req.file.filename : null;
-        const post = await postModel.create({ user: req.user._id, title, description, image, likes: [req.user._id] })
+        const imagefile = req.file ? req.file.filename : null;
+        const post = await postModel.create({ user: req.user._id, title, description, image: imagefile, likes: [req.user._id] })
         await userModel.findByIdAndUpdate(req.user._id, { $push: { posts: post._id } })
         res.json({ success: true, post });
     } catch (err) {
@@ -212,7 +207,4 @@ app.delete("/boards/:boardId/posts/:postId", isLoggedIn, async (req, res) => {
     res.json({ success: true });
 });
 
-// ---------------- SERVER ----------------
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(3000, () => console.log(`🚀 Server running is runnign on port 3000`));
