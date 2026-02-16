@@ -14,9 +14,6 @@ app.use(cors({ origin: "https://test-pinterest-1.onrender.com", credentials: tru
 app.use(express.json());
 app.use(cookieParser());
 
-const path = require('path');
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 const SECRET = "shhhh";
 
 app.use((req, res, next) => {
