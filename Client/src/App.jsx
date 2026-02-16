@@ -8,7 +8,7 @@ import CreatePost from './components/CreatePost.jsx'
 import Pins from './components/Pins.jsx'
 import SingleBoard from './components/SingleBoard.jsx'
 import SinglePin from './components/SinglePin.jsx'
-import Dashboard from './components/Dashboard.JSX'; // new page
+import Dashboard from './components/Dashboard.jsx'; // new page
 
 const App = () => {
   return (
