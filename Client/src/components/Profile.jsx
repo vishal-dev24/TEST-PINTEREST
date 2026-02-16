@@ -85,86 +85,124 @@ const Profile = () => {
       </nav>
 
       {/* Profile Section */}
-      <div className="flex justify-center items-center min-h-[50vh] bg-gray-100 dark:bg-gray-900 px-4">
-        <div className="relative w-full max-w-3xl  bg-white dark:bg-gray-800 shadow-2xl border-2 border-white/60 rounded-2xl flex items-center p-6 space-x-8 backdrop-blur-lg">
+      <div className="flex justify-center items-center min-h-[40vh] bg-gray-100 dark:bg-gray-900 px-4 py-6 sm:px-6 lg:px-8">
+        <div className="relative w-auto max-w-4xl bg-white dark:bg-gray-800 shadow-2xl border-2 border-white/60 rounded-2xl flex flex-col md:flex-row items-center md:items-start p-2 md:space-x-8 space-y-6 md:space-y-0 backdrop-blur-lg p-4 md:p-6 overflow-hidden">
 
           {/* Profile Image */}
-          <div className="w-36 h-36 rounded-full border-4 border-gray-300 dark:border-gray-600 overflow-hidden shadow-md">
+          <div className="flex-shrink-0 w-32 h-32 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-3xl border-4 border-gray-300 dark:border-gray-600 overflow-hidden shadow-md">
             {user && (
-              <img src={user.image}
-                alt="User"
-                className="w-full h-full object-cover"
-              />
+              <img src={user.image} alt="User" className="w-full h-full object-cover" />
             )}
           </div>
 
-          {/* User Details */}
-          <div className="flex flex-col space-y-1">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{user?.username}</h2>
-            <p className="text-gray-500 dark:text-gray-300 text-lg">@{user?.email.split("@")[0]}</p>
-            <p className="text-gray-700 dark:text-gray-400 text-lg italic">"Make every moment count."</p>
+          <div className="flex flex-col space-y-2 w-full text-center md:text-left">
+            <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold text-gray-900 dark:text-white break-words">{user?.username}</h2>
+            <p className="text-gray-500 dark:text-gray-300 text-sm sm:text-lg">@{user?.email.split("@")[0]}</p>
+
+            <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-lg italic break-words"> "Make every moment count."</p>
 
             {/* Followers & Following */}
-            <div className="flex space-x-6 mt-2 text-gray-800 dark:text-gray-300">
+            <div className="flex justify-center md:justify-start space-x-6 mt-2 text-gray-800 dark:text-gray-300">
               <div className="text-center">
-                <p className="text-2xl font-bold">320</p>
-                <p className="text-lg">Followers</p>
+                <p className="text-xl sm:text-2xl md:text-2xl font-bold">320</p>
+                <p className="text-sm sm:text-lg">Followers</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold">150</p>
-                <p className="text-lg">Following</p>
+                <p className="text-xl sm:text-2xl md:text-2xl font-bold">150</p>
+                <p className="text-sm sm:text-lg">Following</p>
               </div>
             </div>
 
             {/* Buttons */}
-            <div className="mt-4 flex space-x-5">
+            <div className="mt-4 flex flex-row flex-nowrap justify-center md:justify-start gap-3">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-5 py-2 bg-teal-600 text-white font-bold text-lg rounded-lg shadow-md hover:bg-teal-700 transition">
+                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-700 text-white font-semibold text-sm sm:text-base rounded-lg shadow-lg hover:scale-105 hover:from-teal-600 hover:to-teal-800 transition-transform duration-200">
                 Edit
               </button>
 
               <button
                 onClick={() => axios.get(`${BASE_URL}/logout`, { withCredentials: true }).then(() => navigate("/login"))}
-                className="px-5 py-2 bg-red-500 text-white font-bold text-lg rounded-lg shadow-md hover:bg-red-600 transition">
+                className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white font-semibold text-sm sm:text-base rounded-lg shadow-lg hover:scale-105 hover:from-red-600 hover:to-red-800 transition-transform duration-200">
                 Logout
               </button>
 
               <button
-                onClick={() => navigate("/Dashboard")} className="px-5 py-2 bg-teal-600 text-white font-bold text-lg rounded-lg shadow-md hover:bg-teal-700 transition">
+                onClick={() => navigate("/Dashboard")}
+                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-700 text-white font-semibold text-sm sm:text-base rounded-lg shadow-lg hover:scale-105 hover:from-teal-600 hover:to-teal-800 transition-transform duration-200">
                 Dashboard
               </button>
             </div>
+
           </div>
         </div>
       </div>
 
+
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
-          <div className="bg-gray-800 text-gray-100 rounded-xl w-full max-w-xs p-5">
-            <h2 className="text-xl font-semibold mb-4 text-center">Edit Profile</h2>
-            <input type="text" value={formData.username} onChange={(e) => setFormData({ ...formData, username: e.target.value })} className="w-full bg-gray-700 text-gray-100 border border-gray-600 p-2 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="New Username" />
-            <input type="file" onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })} className="w-full text-gray-100 mb-4" />
-            <div className="flex justify-end gap-2">
-              <button onClick={handleUpdate} className="px-3 py-1 bg-green-600 hover:bg-green-700 rounded font-medium">Update</button>
-              <button onClick={() => setIsModalOpen(false)} className="px-3 py-1 bg-red-500 hover:bg-red-600 rounded font-medium">Cancel</button>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4 animate-fadeIn">
+          <div className="bg-gray-900 text-gray-100 rounded-3xl w-full max-w-sm sm:max-w-md p-6 sm:p-8 shadow-2xl transform transition-transform duration-300 scale-95 animate-scaleUp">
+
+            {/* Title */}
+            <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-center">Edit Profile</h2>
+
+            {/* Username Input */}
+            <input
+              type="text"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+              placeholder="New Username"
+              className="w-full bg-gray-800 text-gray-100 border border-gray-600 p-3 rounded-lg mb-5 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-1 transition"
+            />
+
+            {/* File Input */}
+            <label className="w-full mb-6 cursor-pointer">
+              <div className="w-full bg-gradient-to-r from-emerald-400 to-sky-700 text-white text-center py-3 mb-3 rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">Choose Profile Image
+              </div>
+              <input
+                type="file"
+                onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
+                className="hidden"
+              />
+            </label>
+
+            {/* Buttons */}
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={handleUpdate}
+                className="px-4 py-2 bg-gradient-to-r from-green-700 to-teal-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 hover:from-green-600 hover:to-teal-700 transition-transform duration-200"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 bg-gradient-to-l from-purple-900 to-red-400 text-white font-semibold rounded-lg shadow-lg hover:scale-105 hover:from-red-600 hover:to-cyan-600 transition-transform duration-200"
+              >
+                Cancel
+              </button>
             </div>
+
           </div>
         </div>
       )}
 
       {/* User Boards */}
-      <div className="container  mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4 ">
         {/* Header */}
-        <div className="flex items-center justify-between bg-white dark:bg-gray-800 shadow-md p-3 rounded-xl border dark:border-gray-700">
-          <p className="text-xl text-gray-900 dark:text-white uppercase sm:text-xl md:text-2xl font-bold">All Boards ⇾</p>
+        <div className="flex items-center justify-between bg-white dark:bg-gray-800 shadow-md p-3 sm:p-4 rounded-xl border dark:border-gray-700 gap-3 sm:gap-0">
+          <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white uppercase">
+            All Boards ⇾
+          </p>
           <button
             onClick={() => { setShowBoardModal(false); setShowCreateBoardModal(true); }}
-            className="text-white bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2 rounded-lg shadow-md hover:scale-105 transform transition"
+            className="text-sm sm:text-base md:text-base text-white bg-gradient-to-r from-blue-500 to-indigo-600 px-3 sm:px-4 py-2 rounded-lg shadow-md hover:scale-105 transform transition"
           >
             + Create New Board
           </button>
         </div>
+
+
+
 
         {/* Boards Grid */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

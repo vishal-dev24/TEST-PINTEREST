@@ -86,7 +86,7 @@ const CreatePost = () => {
       </nav>
 
       {/* Center Section */}
-      <div className="flex flex-1 justify-center items-center px-4 py-10">
+      {/* <div className="flex flex-1 justify-center items-center px-4 py-10">
         <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-8">
 
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
@@ -141,6 +141,69 @@ const CreatePost = () => {
             <button
               type="submit"
               className="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md"
+            >
+              Create Pin
+            </button>
+
+          </form>
+        </div>
+      </div> */}
+      {/* Center Section */}
+      <div className="flex flex-1 justify-center items-center px-8 ">
+        <div className="w-full max-w-sm bg-white shadow-xl rounded-2xl p-7">
+
+          <h2 className="text-xl font-bold text-gray-900 text-center mb-5">
+            Create a New PIN
+          </h2>
+
+          <form onSubmit={handleSubmit} className="space-y-3">
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-1 text-sm">
+                Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full p-2.5 rounded-lg border border-gray-300 capitalize focus:ring-2 focus:ring-gray-700 outline-none text-sm"
+                placeholder="Enter post title"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-1 text-sm">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="3"
+                className="w-full p-2.5 rounded-lg border border-gray-300 capitalize focus:ring-2 focus:ring-gray-700 outline-none text-sm"
+                placeholder="Write something about this post"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-1 text-sm">
+                Upload Image
+              </label>
+              <input
+                type="file"
+                name="image"
+                onChange={handleChange}
+                className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-700 outline-none text-sm"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-2.5 rounded-lg transition duration-300 shadow-md text-sm"
             >
               Create Pin
             </button>

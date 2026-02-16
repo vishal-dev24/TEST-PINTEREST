@@ -9,7 +9,6 @@ const Register = () => {
 
   const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
 
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({ ...formData, [name]: files ? files[0] : value });

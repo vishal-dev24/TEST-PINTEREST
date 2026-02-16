@@ -62,11 +62,11 @@ const SingleBoard = () => {
             </nav>
 
             {/* Masonry Grid Layout */}
-            <div className="p-5">
+            <div className="pt-2">
                 <h2 className="text-3xl text-gray-800 font-bold text-start ms-5 capitalize">{board.name}</h2>
                 <p className="text-gray-600 text-md ms-5"> {board.posts.length} {board.posts.length === 1 ? "pin" : "pins"}</p>
 
-                <div className="p-5 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4">
+                <div className="p-4 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4">
                     {board.posts.map((post) => (
                         <div key={post._id} className="relative group break-inside-avoid bg-white border border-gray-400 bg-slate-200 shadow-lg rounded-lg overflow-hidden">
                             <a onClick={() => navigate(`/post/${post._id}`)}>

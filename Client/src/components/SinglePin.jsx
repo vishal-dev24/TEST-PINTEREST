@@ -106,7 +106,7 @@ const SinglePin = () => {
             </nav>
 
             {/* Main Content */}
-            <div className="min-h-screen flex items-start justify-center bg-gray-500 p-8">
+            <div className="min-h-screen flex items-start justify-center bg-gray-500 p-5">
                 <div className="w-full max-w-5xl bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden flex flex-col md:flex-row transition-all">
                     {/* Left: Image Section */}
                     <div className="md:w-1/2 relative group border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden">
