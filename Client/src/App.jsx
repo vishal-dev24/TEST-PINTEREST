@@ -9,23 +9,26 @@ import Pins from './components/Pins.jsx'
 import SingleBoard from './components/SingleBoard.jsx'
 import SinglePin from './components/SinglePin.jsx'
 import Dashboard from './components/Dashboard.jsx'; // new page
+import AppWrapper from "./layout/AppWrapper.jsx";
 
 const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Register />} />
-        {/* <Route path="/" element={<Navigate to="/home" />} /> */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/CreatePost" element={<CreatePost />} />
-        <Route path="/Pins" element={< Pins />} />
-        <Route path="/SingleBoard/:boardId" element={<SingleBoard />} />
-        <Route path="/post/:postId" element={<SinglePin />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
+      <AppWrapper>
+        <Routes>
+          <Route path="/" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/CreatePost" element={<CreatePost />} />
+          <Route path="/Pins" element={< Pins />} />
+          <Route path="/SingleBoard/:boardId" element={<SingleBoard />} />
+          <Route path="/post/:postId" element={<SinglePin />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </AppWrapper>
     </Router>
+
   )
 }
 
