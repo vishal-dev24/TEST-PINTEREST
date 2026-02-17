@@ -102,11 +102,11 @@ const Profile = () => {
           <div className="flex flex-col w-full text-center md:text-left space-y-2 ">
             <div className="flex flex-row sm:flex-col items-center justify-center sm:items-start gap-2 sm:gap-0">
 
-              <p className="sm:text-xl font-semibold  text-gray-900 dark:text-white tracking-tight break-words">
+              <p className="sm:text-xl font-semibold capitalize text-gray-900 dark:text-white tracking-tight break-words">
                 {user?.username}
               </p>
 
-              <p className="sm:text-base text-gray-500 dark:text-gray-300 tracking-tight">
+              <p className="sm:text-base text-gray-500 capitalize dark:text-gray-300 tracking-tight">
                 {user?.email}
               </p>
 
