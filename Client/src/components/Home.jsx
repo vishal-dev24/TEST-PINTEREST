@@ -27,7 +27,8 @@ const Home = () => {
         if (loading || !hasMore) return;
         setLoading(true);
         try {
-            const res = await axios.get(`http://localhost:3000/posts?page=${pageNumber}`);
+            const res = await axios.get(`${BASE_URL}/posts?page=${pageNumber}`);
+
 
             if (res.data.posts.length === 0) {
                 setHasMore(false);
