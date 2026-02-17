@@ -8,7 +8,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
-  const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
+  const BASE_URL = "https://test-pinterest.onrender.com";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,48 +38,36 @@ const Login = () => {
 
       {/* Navbar */}
       <nav className="w-full bg-white p-3 shadow-md">
-        <div className="flex justify-between items-center max-w-7xl mx-auto px-5">
+        <div className="flex justify-between items-center max-w-7xl mx-auto px-5 ">
           <a href="#" className="text-2xl font-extrabold flex items-center space-x-3">
-            <img
-              src={img}
-              alt="Pinterest Icon"
-              className="w-10 h-10 rounded-full shadow-md"
-            />
-            <span className="tracking-wide text-gray-800">Phinix</span>
+            <img src={img} alt="Pinterest Icon" className="w-10 h-10 rounded-full shadow-md" />
+            <span className="tracking-wide text-gray-800 ">Phinix</span>
           </a>
 
-          <Link
-            to="/"
-            className="bg-gray-900 hover:bg-gray-700 font-bold text-white px-4 py-2 rounded-lg transition"
-          >
-            Register
-          </Link>
+          <button onClick={() => navigate("/")}
+            className="bg-gray-900 hover:bg-gray-700 font-bold text-white px-4 py-2 rounded-lg transition" >Register
+          </button>
         </div>
       </nav>
 
       {/* Center Section */}
-      <div className="flex flex-1 items-center justify-center px-4">
-        <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-300">
-
-          <h2 className="text-gray-900 text-3xl font-extrabold text-center mb-6">
-            Welcome Back
-          </h2>
-
+      <div className="flex flex-1 items-start justify-center px-8 py-20">
+        <div className="bg-white p-7 rounded-2xl shadow-xl w-full max-w-md border border-gray-300">
+          <h2 className="text-gray-900 text-[25px] font-extrabold text-center mb-3">Welcome Back</h2>
           {/* Show error message */}
           {error && (
             <p className="text-red-500 text-center mb-4 font-semibold">{error}</p>
           )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
 
             <div>
-              <label className="block text-gray-800 font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold  mb-1">
                 Email
               </label>
               <input
                 type="email"
                 name="email"
-                className="w-full p-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-gray-700 outline-none"
+                className="w-full p-2.5 rounded-lg border border-gray-400 focus:ring-2 focus:ring-gray-700 outline-none"
                 placeholder="Enter your email"
                 onChange={handleChange}
                 required
@@ -88,13 +76,13 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="block text-gray-800 font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-1">
                 Password
               </label>
               <input
                 type="password"
                 name="password"
-                className="w-full p-3 rounded-lg border border-gray-400 focus:ring-2 focus:ring-gray-700 outline-none"
+                className="w-full p-2.5 rounded-lg border border-gray-400 focus:ring-2 focus:ring-gray-700 outline-none"
                 placeholder="Enter password"
                 onChange={handleChange}
                 required
@@ -104,7 +92,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md"
+              className="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-2.5 mt-2 rounded-lg transition duration-300 shadow-md text-lg "
             >
               Login
             </button>

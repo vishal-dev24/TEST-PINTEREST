@@ -19,14 +19,15 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
 
-    const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
+    const BASE_URL = "https://test-pinterest.onrender.com";
+    // const BASE_URL = "http://localhost:3000"; // local testing ke liye comment/uncomment karo
 
     // 🔥 Fetch Posts Function
     const fetchPosts = async (pageNumber) => {
         if (loading || !hasMore) return;
         setLoading(true);
         try {
-            const res = await axios.get(`${BASE_URL}/posts?page=${pageNumber}`);
+            const res = await axios.get(`http://localhost:3000/posts?page=${pageNumber}`);
 
             if (res.data.posts.length === 0) {
                 setHasMore(false);
@@ -164,12 +165,12 @@ const Home = () => {
 
             {/* Board Modal */}
             {showBoardModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg w-80">
-                        <h2 className="text-xl font-bold mb-3">Save to Board</h2>
+                <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 px-4">
+                    <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-emerald-500  p-5 rounded-lg shadow-lg w-80">
+                        <h2 className="text-xl font-bold mb-3 text-white/90 ">Save to Board</h2>
                         {boards.length > 0 ? (
                             boards.map((board) => (
-                                <button key={board._id} className="text-gray-800 hover:text-white flex items-center w-full py-1 px-4 bg-gray-100 border-2 border-zinc-400 rounded-lg mb-2 hover:bg-gray-800" onClick={() => saveToBoard(board._id)}>
+                                <button key={board._id} className="text-gray-800 hover:text-white flex items-center w-full py-1 px-4 bg-gray-100 border-2 border-zinc-400 rounded-lg mb-2 hover:bg-sky-800" onClick={() => saveToBoard(board._id)}>
                                     {board.posts.length > 0 && board.posts[0].image ? (
                                         <img src={board.posts[0].image} alt={board.name} className="w-12 h-12 rounded-lg border-slate-600 border mr-5" />
                                     ) : (
@@ -181,7 +182,7 @@ const Home = () => {
                         ) : (
                             <p className="text-gray-500">No boards found.</p>
                         )}
-                        <div className="flex justify-between p-2 rounded">
+                        <div className="flex justify-between px-1 rounded">
                             <button onClick={() => { setShowBoardModal(false); setShowCreateBoardModal(true); }} className="mt-3 text-blue-900 bg-slate-300 p-2 rounded hover:bg-cyan-600 hover:text-white text-lg">
                                 + Create New Board
                             </button>
@@ -196,17 +197,20 @@ const Home = () => {
 
             {/* Create Board Modal */}
             {showCreateBoardModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-5 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-bold mb-3">Create New Board</h2>
+                <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 px-5">
+                    <div className="w-full max-w-sm bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl shadow-2xl p-6 ">
+                        <h2 className="text-2xl text-white font-bold mb-3">Create New Board</h2>
                         <form onSubmit={(e) => { e.preventDefault(); createBoard(); }}>
-                            <input type="text" value={newBoardName} onChange={(e) => setNewBoardName(e.target.value)} placeholder="Board Name" className="w-full border p-2 rounded-lg capitalize" required />
-                            <button type="submit" className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg">Create</button>
-                            <button type="button" onClick={() => setShowCreateBoardModal(false)} className="mt-3 text-red-500 block">Cancel</button>
+                            <input type="text" value={newBoardName} onChange={(e) => setNewBoardName(e.target.value)} placeholder="Board Name" className="w-full border p-3 rounded-lg capitalize" required />
+                            <div className="flex justify-between gap-3 pt-4">
+                                <button type="submit" className="px-4 py-2 text-lg rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md hover:scale-105 transition" > Create Board </button>
+                                <button type="button" onClick={() => setShowCreateBoardModal(false)} className="px-3 py-2 text-lg bg-gradient-to-r from-pink-600 to-red-600 rounded-xl border border-gray-300 text-gray-100 hover:bg-gray-100 transition" >Cancel </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             )}
+
         </div>
     );
 };

@@ -13,7 +13,8 @@ const SingleBoard = () => {
     const [selectedPost, setSelectedPost] = useState(null);
     const [showBoardModal, setShowBoardModal] = useState(false);
 
-    const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
+    const BASE_URL = "https://test-pinterest.onrender.com";
+    // const BASE_URL = "http://localhost:3000"; // local testing ke liye comment/uncomment karo
 
     useEffect(() => {
         axios.get(`${BASE_URL}/boards/${boardId}`)
@@ -62,7 +63,7 @@ const SingleBoard = () => {
             </nav>
 
             {/* Masonry Grid Layout */}
-            <div className="pt-2">
+            <div className="pt-3 md:p-4">
                 <h2 className="text-3xl text-gray-800 font-bold text-start ms-5 capitalize">{board.name}</h2>
                 <p className="text-gray-600 text-md ms-5"> {board.posts.length} {board.posts.length === 1 ? "pin" : "pins"}</p>
 

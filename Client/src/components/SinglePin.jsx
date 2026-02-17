@@ -18,13 +18,14 @@ const SinglePin = () => {
     const openZoom = () => setIsZoomed(true);
     const closeZoom = () => setIsZoomed(false);
 
-    const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
+    const BASE_URL = "https://test-pinterest.onrender.com";
 
     // Fetch single post
     useEffect(() => {
         axios
             .get(`${BASE_URL}/posts/${postId}`, { withCredentials: true })
             .then((res) => {
+                // console.log("FULL POST DATA 👉", res.data.post);
                 setPost(res.data.post);
                 setLoading(false);
             })
@@ -106,36 +107,21 @@ const SinglePin = () => {
             </nav>
 
             {/* Main Content */}
-            <div className="min-h-screen flex items-start justify-center bg-gray-500 p-5">
+            <div className="min-h-screen flex items-start justify-center bg-gray-500 p-6">
                 <div className="w-full max-w-5xl bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden flex flex-col md:flex-row transition-all">
                     {/* Left: Image Section */}
                     <div className="md:w-1/2 relative group border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden">
-                        <img
-                            src={post.image}
-                            alt={post.title}
-                            className="object-cover w-full h-[380px] md:h-[480px] lg:h-[520px] transition-all rounded-xl"
-                        />
+                        <img src={post.image} alt={post.title} className="object-cover w-full h-[380px] md:h-[480px] lg:h-[520px] transition-all rounded-xl" />
                         {/* Zoom */}
-                        <button
-                            onClick={openZoom}
-                            className="absolute top-3 left-3 bg-white dark:bg-gray-900 text-gray-800 dark:text-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 hover:scale-110 transition-all"
-                            title="View Full Image"
-                        >
+                        <button onClick={openZoom} className="absolute top-3 left-3 bg-white dark:bg-gray-900 text-gray-800 dark:text-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 hover:scale-110 transition-all" title="View Full Image">
                             🔍
                         </button>
                         {/* Save */}
-                        <button
-                            onClick={() => openBoardModal(post._id)}
-                            className="absolute top-3 right-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transform transition-all hover:scale-105"
-                        >
+                        <button onClick={() => openBoardModal(post._id)} className="absolute top-3 right-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transform transition-all hover:scale-105">
                             Save
                         </button>
                         {/* Download */}
-                        <img
-                            src={lg}
-                            onClick={() => handleDownload(post.image, post.title)}
-                            className="absolute right-3 bottom-3 opacity-0 bg-blue-100 p-3 rounded-lg text-white shadow-md group-hover:opacity-100 transition-all hover:scale-105 cursor-pointer"
-                        />
+                        <img src={lg} onClick={() => handleDownload(post.image, post.title)} className="absolute right-3 bottom-3 opacity-0 bg-blue-100 p-3 rounded-lg text-white shadow-md group-hover:opacity-100 transition-all hover:scale-105 cursor-pointer" />
                     </div>
 
                     {/* Right: Details Section */}
@@ -148,10 +134,10 @@ const SinglePin = () => {
 
                         {/* User Info & Likes */}
                         <div className="flex items-center gap-3">
-                            {post.userId?.image && (
+                            {post.user?.image && (
                                 <img
-                                    src={post.userId.image}
-                                    alt={post.userId.username}
+                                    src={post.user.image}
+                                    alt={post.user.username}
                                     className="w-14 h-14 rounded-full object-cover border-2 border-gray-400 shadow-md"
                                 />
                             )}
@@ -161,27 +147,29 @@ const SinglePin = () => {
                         </div>
 
                         {/* Buttons + Share */}
-                        {/* Buttons + Share */}
-                        <div className="relative flex items-center justify-center gap-4 mt-5">
+                        <div className="relative flex items-center justify-center gap-2 md:gap-4 mt-3 md:mt-5">
                             <button onClick={() => navigate("/profile")} className="px-2 py-3 w-full bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-800 transition-all transform hover:scale-105">Back</button>
-                            <button onClick={() => setShowShare(!showShare)} className="px-2 py-3 w-full bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-500 transition-all transform hover:scale-105"> Share</button>
+                            <button onClick={() => setShowShare(!showShare)}
+                                className="px-2 py-3 w-full bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-500 transition-all transform hover:scale-105"> Share</button>
 
                             {showShare && (
-                                <div
-                                    ref={shareRef}
-                                    className="absolute bottom-full mb-3 right-0 w-64 bg-slate-700 border shadow-xl rounded-xl p-4 flex flex-col gap-3 z-50 before:content-[''] before:absolute before:-bottom-2 before:right-5 before:w-3 before:h-3 before:bg-white dark:before:bg-gray-700 before:rotate-45"
-                                >
+                                <div ref={shareRef} className="absolute bottom-full mb-2 right-0 w-46 md:w-64 bg-slate-700 border shadow-xl rounded-xl p-2 md:p-4 flex flex-col gap-2 md:gap-3 z-50 before:content-[''] before:absolute before:-bottom-2 before:right-5 before:w-3 before:h-3 before:bg-white dark:before:bg-gray-700 before:rotate-45">
+
                                     {/* Copy URL */}
                                     <button
                                         onClick={() => {
                                             navigator.clipboard.writeText(window.location.href);
                                             alert("URL copied!");
                                         }}
-                                        className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition-all shadow-sm"
+                                        className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-2 
+text-sm md:text-base 
+bg-gray-100 hover:bg-gray-300 
+rounded-full transition-all shadow-sm"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5 text-gray-800 dark:text-black"
+                                            className="w-4 h-4 md:w-5 md:h-5 text-gray-800 dark:text-black"
+
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -196,7 +184,10 @@ const SinglePin = () => {
                                         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-sm transition-all"
+                                        className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-2 
+text-sm md:text-base 
+bg-blue-600 hover:bg-blue-500 text-white 
+rounded-full shadow-sm transition-all"
                                     >
                                         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="FB" className="w-5 h-5" />
                                         Facebook
@@ -207,7 +198,10 @@ const SinglePin = () => {
                                         href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-3 py-2 bg-blue-400 hover:bg-blue-300 text-white rounded-full shadow-sm transition-all"
+                                        className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-2 
+text-sm md:text-base 
+bg-blue-400 hover:bg-blue-300 
+rounded-full transition-all shadow-sm"
                                     >
                                         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" className="w-5 h-5" />
                                         Twitter
@@ -218,14 +212,16 @@ const SinglePin = () => {
                                         href={`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + " " + window.location.href)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-3 py-2 bg-green-500 hover:bg-green-400 text-white rounded-full shadow-sm transition-all"
+                                        className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-2 
+text-sm md:text-base  text-white/90
+bg-green-600 hover:bg-green-700 
+rounded-full transition-all shadow-sm"
                                     >
                                         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" className="w-5 h-5" />
                                         WhatsApp
                                     </a>
                                 </div>
                             )}
-
 
                         </div>
                     </div>

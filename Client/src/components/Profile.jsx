@@ -13,7 +13,7 @@ const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ username: "", image: null });
 
-  const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
+  const BASE_URL = "https://test-pinterest.onrender.com";
 
   useEffect(() => {
     axios.get(`${BASE_URL}/profile`, { withCredentials: true })
@@ -89,15 +89,28 @@ const Profile = () => {
         <div className="relative w-auto max-w-4xl bg-white dark:bg-gray-800 shadow-2xl border-2 border-white/60 rounded-2xl flex flex-col md:flex-row items-center md:items-start p-2 md:space-x-8 space-y-6 md:space-y-0 backdrop-blur-lg p-4 md:p-6 overflow-hidden">
 
           {/* Profile Image */}
-          <div className="flex-shrink-0 w-32 h-32 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-3xl border-4 border-gray-300 dark:border-gray-600 overflow-hidden shadow-md">
-            {user && (
-              <img src={user.image} alt="User" className="w-full h-full object-cover" />
-            )}
+          <div
+            className="w-40 h-40 rounded-3xl overflow-hidden flex-shrink-0 md:mt-[30px] border-2 border-gray-300 dark:border-gray-400 shadow">
+            <img
+              src={user?.image}
+              alt="User"
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          <div className="flex flex-col space-y-2 w-full text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold text-gray-900 dark:text-white break-words">{user?.username}</h2>
-            <p className="text-gray-500 dark:text-gray-300 text-sm sm:text-lg">@{user?.email.split("@")[0]}</p>
+          {/* Profile Details */}
+          <div className="flex flex-col w-full text-center md:text-left space-y-2 ">
+            <div className="flex flex-row sm:flex-col items-center justify-center sm:items-start gap-2 sm:gap-0">
+
+              <p className="sm:text-xl font-semibold  text-gray-900 dark:text-white tracking-tight break-words">
+                {user?.username}
+              </p>
+
+              <p className="sm:text-base text-gray-500 dark:text-gray-300 tracking-tight">
+                {user?.email}
+              </p>
+
+            </div>
 
             <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-lg italic break-words"> "Make every moment count."</p>
 
@@ -115,26 +128,42 @@ const Profile = () => {
 
             {/* Buttons */}
             <div className="mt-4 flex flex-row flex-nowrap justify-center md:justify-start gap-3">
+
+              {/* Edit */}
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-700 text-white font-semibold text-sm sm:text-base rounded-lg shadow-lg hover:scale-105 hover:from-teal-600 hover:to-teal-800 transition-transform duration-200">
+                className="px-4 py-2 bg-gradient-to-r from-teal-600 to-emerald-500 
+    text-white font-semibold text-sm sm:text-base rounded-lg shadow-md
+    hover:from-teal-700 hover:to-emerald-600 
+    transition-all duration-200">
                 Edit
               </button>
 
+              {/* Dashboard */}
+              <button
+                onClick={() => navigate("/Dashboard")}
+                className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 
+    text-white font-semibold text-sm sm:text-base rounded-lg shadow-md
+    hover:from-indigo-700 hover:to-blue-600 
+    transition-all duration-200">
+                Dashboard
+              </button>
+
+              {/* Logout */}
               <button
                 onClick={() => axios.get(`${BASE_URL}/logout`, { withCredentials: true }).then(() => navigate("/login"))}
-                className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white font-semibold text-sm sm:text-base rounded-lg shadow-lg hover:scale-105 hover:from-red-600 hover:to-red-800 transition-transform duration-200">
+                className="px-4 py-2 bg-gradient-to-r from-red-600 to-pink-500 
+    text-white font-semibold text-sm sm:text-base rounded-lg shadow-md
+    hover:from-rose-700 hover:to-red-600 
+    transition-all duration-200">
                 Logout
               </button>
 
-              <button
-                onClick={() => navigate("/Dashboard")}
-                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-700 text-white font-semibold text-sm sm:text-base rounded-lg shadow-lg hover:scale-105 hover:from-teal-600 hover:to-teal-800 transition-transform duration-200">
-                Dashboard
-              </button>
             </div>
 
+
           </div>
+
         </div>
       </div>
 
@@ -201,9 +230,6 @@ const Profile = () => {
           </button>
         </div>
 
-
-
-
         {/* Boards Grid */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {boards.length > 0 ? boards.map((board) => (
@@ -243,25 +269,22 @@ const Profile = () => {
         </div>
       </div>
 
+
       {showCreateBoardModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-3">Create New Board</h2>
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 px-5">
+          <div className="w-full max-w-sm bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl shadow-2xl p-6 ">
+            <h2 className="text-2xl text-white font-bold mb-3">Create New Board</h2>
             <form onSubmit={(e) => { e.preventDefault(); createBoard(); }}>
-              <input
-                type="text"
-                value={newBoardName}
-                onChange={(e) => setNewBoardName(e.target.value)}
-                placeholder="Board Name"
-                className="w-full border p-2 rounded-lg capitalize"
-                required
-              />
-              <button type="submit" className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg">Create</button>
-              <button type="button" onClick={() => setShowCreateBoardModal(false)} className="mt-3 text-red-500 block">Cancel</button>
+              <input type="text" value={newBoardName} onChange={(e) => setNewBoardName(e.target.value)} placeholder="Board Name" className="w-full border p-3 rounded-lg capitalize" required />
+              <div className="flex justify-between gap-3 pt-4">
+                <button type="submit" className="px-4 py-2 text-lg rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md hover:scale-105 transition" > Create Board </button>
+                <button type="button" onClick={() => setShowCreateBoardModal(false)} className="px-3 py-2 text-lg bg-gradient-to-r from-pink-600 to-red-600 rounded-xl border border-gray-300 text-gray-100 hover:bg-gray-100 transition" >Cancel </button>
+              </div>
             </form>
           </div>
         </div>
       )}
+
 
     </div>
   );

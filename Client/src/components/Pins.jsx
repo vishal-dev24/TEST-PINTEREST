@@ -12,7 +12,7 @@ const Pins = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [showBoardModal, setShowBoardModal] = useState(false);
 
-  const BASE_URL = "https://test-pinterest.onrender.com"; // local testing ke liye comment/uncomment karo
+  const BASE_URL = "https://test-pinterest.onrender.com";
 
   // Fetch user info first
   useEffect(() => {
@@ -81,7 +81,7 @@ const Pins = () => {
         </div>
       </nav>
 
-      <div className="pt-2">
+      <div className="pt-3 md:p-4">
         <h1 className="text-3xl font-bold ms-5">Your Pins</h1>
         {/* post quantity */}
         <p className="text-gray-600 text-sm ms-5">You have {posts.length} pins.</p>
@@ -91,7 +91,7 @@ const Pins = () => {
 
 
         {/* Masonry Grid Layout */}
-        <div className="p-3 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4">
+        <div className="p-4 columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4">
           {posts.length > 0 ? (
             posts.map((post) => (
 
