@@ -20,7 +20,12 @@ process.on('unhandledRejection', (err) => {
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({ origin: ['https://test-pinterest.onrender.com', 'https://test-pinterest-1.onrender.com'], credentials: true }));
+app.use(cors({
+    origin: ['https://test-pinterest.onrender.com',
+        'https://test-pinterest-1.onrender.com'],
+    credentials: true
+}));
+
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 const SECRET = "shhhh"; // Secret key for JWT
@@ -33,7 +38,7 @@ app.post('/register', upload.single('image'), async (req, res) => {
     bcrypt.hash(password, 10, async (err, hash) => {
         const user = await userModel.create({ username, email, password: hash, image: imageUrl });
         const token = jwt.sign({ email, userId: user._id }, SECRET);
-        res.cookie("token", token)
+        res.cookie("token", token, { httpOnly: true, sameSite: "none", secure: true });
         res.json({ success: true, message: "User registered successfully", user });
         console.log("// user created ", { user })
     });
@@ -70,6 +75,7 @@ function isLoggedIn(req, res, next) {
         return res.status(401).json({ success: false, message: "Invalid token" });
     }
 }
+
 // 🟢 Profile Route
 app.get('/profile', isLoggedIn, async (req, res) => {
     const user = await userModel.findById(req.user._id);
@@ -77,6 +83,7 @@ app.get('/profile', isLoggedIn, async (req, res) => {
     res.json({ success: true, user });
     // console.log("// user is here", { user: user._id })
 });
+
 // 🟢 Logout Route
 app.get("/logout", (req, res) => {
     res.cookie("token", "", { httpOnly: true, secure: true, sameSite: "None" });
